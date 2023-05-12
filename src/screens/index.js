@@ -1,3 +1,4 @@
-const { default: SplashScreen } = require("./SplashScreen");
+import SplashScreen from "./SplashScreen";
+import WelcomeScreen from "./WelcomeScreen";
 
-export { SplashScreen }
+export { SplashScreen, WelcomeScreen }
