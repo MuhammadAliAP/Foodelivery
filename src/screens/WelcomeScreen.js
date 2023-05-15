@@ -24,7 +24,7 @@ const Pagination = ({ index }) => {
 
 
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }) => {
     // to get welcome list index
     const [welcomeListIndex, setWelcomeListIndex] = useState(0)
     const welcomeList = useRef();
@@ -69,7 +69,7 @@ const WelcomeScreen = () => {
             {welcomeListIndex === 2 ? (
 
                 <View style={styles.btnContainer}>
-                    <TouchableOpacity activeOpacity={.8} style={styles.gettingstdbtn}>
+                    <TouchableOpacity activeOpacity={.8} style={styles.gettingstdbtn} onPress={() => navigation.navigate('Singin')}>
                         <Text style={styles.gettingstdbtnTxt}>GET STARTED</Text>
                     </TouchableOpacity>
                 </View>
