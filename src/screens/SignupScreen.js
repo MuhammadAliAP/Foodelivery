@@ -67,7 +67,7 @@ const SignupScreen = ({ navigation }) => {
                 </View>
             </View>
             <TouchableOpacity style={styles.siginbtn}>
-                <Text style={styles.siginbtnTest}>Create Account</Text>
+                <Text style={styles.siginbtnTest} onPress={() => navigation.navigate("RegisterPhone")}>Create Account</Text>
             </TouchableOpacity>
 
             <Text style={styles.orText}>OR</Text>
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.POPPINS_MEDIUM,
         // marginLeft:5,
         alignSelf: 'center',
-        marginTop:20
+        marginTop: 20
     },
     facebookBtn: {
         backgroundColor: Colors.FABEBOOK_BLUE,

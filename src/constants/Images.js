@@ -14,4 +14,5 @@ export default {
     EYEICON: require("../assets/images/eyeicon.png"),
     EYEOFF: require("../assets/images/eyeoff.png"),
     EMAIL: require("../assets/images/emailicon.png"),
+    ARROWDOWN: require("../assets/images/arrowdownicon.png"),
 }
