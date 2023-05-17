@@ -8,7 +8,7 @@ const WelcomeCard = ({ title, content, image }) => {
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={Images[image]} resizeMode='contain'/>
-            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.title}>{title} </Text>
             <Text style={styles.content}>{content}</Text>
         </View>
     )

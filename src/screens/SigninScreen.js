@@ -1,11 +1,16 @@
 import { Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { Separator } from '../components'
+import React, { useState } from 'react'
+import { Separator, ToggleButton } from '../components'
+import { Colors, Fonts, Images } from '../constants';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
+import { Display } from '../utils';
 
-import { Colors } from '../constants';
 
+const SigninScreen = ({ navigation }) => {
 
-const SigninScreen = () => {
+  const [isPasswordShow, setIsPasswordShow] = useState(false)
+
   return (
     <View style={styles.container}>
 
@@ -13,58 +18,77 @@ const SigninScreen = () => {
       <Separator height={StatusBar.currentHeight} />
       <View style={styles.headerContainer}>
         {/* <Ionicons name="chevron-back-outline" size={30} /> */}
-        <Text>Sign In</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={.8}>
+          <Image source={Images.BACKICON} resizeMode='contain' style={{ width: 20 }} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Sign In</Text>
       </View>
-      {/* <Icon name={'ios-person-outline'} /> */}
-      <Text>WELCOME</Text>
-      <Text>Enter your username and password,and enjoy ordering food</Text>
-      <View>
-        <View>
-          {/* <Feather /> */}
-          <TextInput />
+
+      <Text style={styles.title}>Welcome</Text>
+      <Text style={styles.content}>Enter your username and password,and enjoy ordering food</Text>
+
+      <View style={styles.inputcontainer}>
+        <View style={styles.inputSubcontainer}>
+          {/* <Feather name='user' size={22}/> */}
+          <Image source={Images.USERICON} style={{ marginRight: 10 }} />
+          <TextInput
+            placeholder='Username'
+            placeholderTextColor={Colors.DEFAULT_GREY}
+            selectionColor={Colors.DEFAULT_GREY}
+            style={styles.inputText}
+          />
         </View>
       </View>
-      <Separator />
-      <View>
-        <View>
+      <Separator height={15} />
+      <View style={styles.inputcontainer}>
+        <View style={styles.inputSubcontainer}>
+          <Image source={Images.LOCKICON} style={{ marginRight: 10 }} />
+          <TextInput placeholder='Password'
+            secureTextEntry={isPasswordShow ? false : true}
+            placeholderTextColor={Colors.DEFAULT_GREY}
+            selectionColor={Colors.DEFAULT_GREY}
+            style={styles.inputText} />
           {/* <Feather /> */}
-          <TextInput />
-          {/* <Feather /> */}
+          <TouchableOpacity onPress={() => setIsPasswordShow(!isPasswordShow)}>
+            {isPasswordShow ? <Image source={Images.EYEOFF} style={{ height: 25, width: 25, marginRight: 15 }} />
+              : <Image source={Images.EYEICON} style={{ height: 25, width: 25, marginRight: 15 }} />}
+          </TouchableOpacity>
         </View>
       </View>
       <Text></Text>
 
-      <View>
-        <View>
-          <Text>remember me</Text>
+      <View style={styles.forgotPasswordContainer}>
+        <View style={styles.toggleContainer}>
+          <ToggleButton size={0.5} />
+          <Text style={styles.reminebdMeText}>remember me</Text>
         </View>
-        <Text>Forgot password</Text>
+        <Text style={styles.forgotPasswordText}>Forgot password</Text>
       </View>
 
-      <TouchableOpacity>
-        <Text>Sign In</Text>
+      <TouchableOpacity style={styles.siginbtn}>
+        <Text style={styles.siginbtnTest}>Sign In</Text>
       </TouchableOpacity>
 
-      <View>
-        <Text>Don't have an account?</Text>
-        <Text>Sign Up</Text>
+      <View style={styles.signupContainer}>
+        <Text style={styles.accountText}>Don't have an account?</Text>
+        <Text style={styles.signupText}>Sign Up</Text>
       </View>
-      <Text>OR</Text>
+      <Text style={styles.orText}>OR</Text>
 
-      <TouchableOpacity>
-        <View>
-          <View>
-            <Image />
+      <TouchableOpacity style={styles.facebookBtn}>
+        <View style={styles.fbgContainer}>
+          <View style={styles.signinBtnLogoContainer}>
+            <Image source={Images.FACEBOOK} style={styles.signinBtnLogo} />
           </View>
-          <Text>Connect with Facebook</Text>
+          <Text style={styles.fbgbtnText}>Connect with Facebook</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
-        <View>
-          <View>
-            <Image />
+      <TouchableOpacity style={styles.googleBtn}>
+        <View style={styles.fbgContainer}>
+          <View style={styles.signinBtnLogoContainer}>
+            <Image source={Images.GOOGLE} style={styles.signinBtnLogo} />
           </View>
-          <Text>Connect with Google</Text>
+          <Text style={styles.fbgbtnText}>Connect with Google</Text>
         </View>
       </TouchableOpacity>
 
@@ -81,7 +105,159 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    lineHeight: 20 * 1.4,
+    width: Display.setHeight(80),
+    marginStart: Display.setHeight(16),
+  },
+  title: {
+    fontSize: 20,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    lineHeight: 20 * 1.4,
+    marginTop: 50,
+    marginBottom: 10,
+    marginHorizontal: 20
+  },
+  content: {
+    fontSize: 20,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    marginTop: 10,
+    marginBottom: 20,
+    marginHorizontal: 20
+  },
+  inputcontainer: {
+    backgroundColor: Colors.LIGHT_GREY,
+    marginHorizontal: 20,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    borderWidth: .5,
+    borderColor: Colors.LIGHT_GREY2
+  },
+  inputSubcontainer: {
+    flexDirection: "row",
     alignItems: "center"
+  },
+  inputText: {
+    fontSize: 18,
+    textAlignVertical: "center",
+    padding: 0,
+    height: Display.setHeight(6),
+    color: Colors.DEFAULT_BLACK,
+    flex: 1
+  },
+  forgotPasswordContainer: {
+    marginHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  reminebdMeText: {
+    marginLeft: 10,
+    fontSize: 12,
+    lineHeight: 12 * 1.4,
+    color: Colors.LIGHT_GREY2,
+    fontFamily: Fonts.POPPINS_MEDIUM
+  },
+  forgotPasswordText: {
+    fontSize: 12,
+    lineHeight: 12 * 1.4,
+    color: Colors.LIGHT_GREEN,
+    fontFamily: Fonts.POPPINS_BOLD
+  },
+  siginbtn: {
+    backgroundColor: Colors.LIGHT_GREEN,
+    borderRadius: 8,
+    marginHorizontal: 20,
+    height: Display.setHeight(6),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20
+  },
+  siginbtnTest: {
+    fontSize: 18,
+    lineHeight: 18 * 1.4,
+    color: Colors.DEFAULT_WHITE,
+    fontFamily: Fonts.POPPINS_MEDIUM
+  },
+  signupContainer: {
+    marginHorizontal: 20,
+    justifyContent: 'center',
+    paddingVertical: 20,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  accountText: {
+    fontSize: 13,
+    lineHeight: 13 * 1.4,
+    color: Colors.DEFAULT_BLACK,
+    fontFamily: Fonts.POPPINS_MEDIUM
+  },
+  signupText: {
+    fontSize: 13,
+    lineHeight: 13 * 1.4,
+    color: Colors.DEFAULT_GREEN,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    marginLeft: 5
+  },
+  orText: {
+    fontSize: 15,
+    lineHeight: 15 * 1.4,
+    color: Colors.DEFAULT_GREEN,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    // marginLeft:5,
+    alignSelf: 'center'
+  },
+  facebookBtn: {
+    backgroundColor: Colors.FABEBOOK_BLUE,
+    paddingVertical: 15,
+    marginHorizontal: 20,
+    borderRadius: 8,
+    marginVertical: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+
+  },
+  googleBtn: {
+    backgroundColor: Colors.GOOGLE_BLUE,
+    paddingVertical: 15,
+    marginHorizontal: 20,
+    borderRadius: 8,
+    marginVertical: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  signinBtnLogo: {
+    width: 30,
+    height: 30
+  },
+  signinBtnLogoContainer: {
+
+    position: 'absolute',
+    left: 25,
+    padding: 2
+  },
+  fbgContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%'
+  },
+  fbgbtnText: {
+    fontSize: 13,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    lineHeight: 13 * 1.4,
+    color: Colors.DEFAULT_WHITE
+
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 
 
