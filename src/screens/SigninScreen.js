@@ -62,7 +62,7 @@ const SigninScreen = ({ navigation }) => {
           <ToggleButton size={0.5} />
           <Text style={styles.reminebdMeText}>remember me</Text>
         </View>
-        <Text style={styles.forgotPasswordText}>Forgot password</Text>
+        <Text style={styles.forgotPasswordText} onPress={() => navigation.navigate("ForgotPassword")}>Forgot password</Text>
       </View>
 
       <TouchableOpacity style={styles.siginbtn}>
@@ -71,7 +71,7 @@ const SigninScreen = ({ navigation }) => {
 
       <View style={styles.signupContainer}>
         <Text style={styles.accountText}>Don't have an account?</Text>
-        <Text style={styles.signupText}>Sign Up</Text>
+        <Text style={styles.signupText} onPress={() => navigation.navigate('Signup')}>Sign Up</Text>
       </View>
       <Text style={styles.orText}>OR</Text>
 

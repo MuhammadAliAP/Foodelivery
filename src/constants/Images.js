@@ -13,5 +13,5 @@ export default {
     LOCKICON: require("../assets/images/lockicon.png"),
     EYEICON: require("../assets/images/eyeicon.png"),
     EYEOFF: require("../assets/images/eyeoff.png"),
-
+    EMAIL: require("../assets/images/emailicon.png"),
 }
