@@ -9,6 +9,9 @@ import { StaticImageService } from '../services'
 const getDropDownStyle = (y) => ({ ...styles.counteryDropdown, top: y + 60 })
 
 const RegisterPhoneScreen = ({ navigation }) => {
+    // to pass phone number into verification screen
+
+    const [phoneNumber, setphoneNumber] = useState("")
 
     const [selectedCountry, setselectedCountry] = useState(
         CountyCode.find(country => country.name === 'India'))
@@ -72,6 +75,8 @@ const RegisterPhoneScreen = ({ navigation }) => {
                         style={styles.inputText}
                         //   coustum made drop down close system  
                         onFocus={() => setisDropdownOpen(false)}
+
+                        onChangeText={(text) => setphoneNumber(selectedCountry?.dial_code + text)}
                     />
                 </View>
 
@@ -96,8 +101,10 @@ const RegisterPhoneScreen = ({ navigation }) => {
                 </View>
             )}
 
-            <TouchableOpacity style={styles.siginbtn} activeOpacity={0.8}>
-                <Text style={styles.siginbtnTest}>Continue </Text>
+            <TouchableOpacity style={styles.siginbtn} activeOpacity={0.8} onPress={() => {
+                navigation.navigate("Verification", { phoneNumber })
+            }}>
+                <Text style={styles.siginbtnTest} >Continue </Text>
             </TouchableOpacity>
 
         </View >
@@ -209,5 +216,5 @@ const styles = StyleSheet.create({
         color: Colors.DEFAULT_WHITE,
         fontFamily: Fonts.POPPINS_MEDIUM
     },
-    
+
 })
