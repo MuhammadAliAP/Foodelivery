@@ -1,3 +1,6 @@
 icons8  for icons
 
 unDraw for images  // vector paint for svg convertion
+
+
+lottie react native and lottie file for annimation

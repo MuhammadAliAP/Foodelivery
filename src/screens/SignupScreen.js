@@ -1,12 +1,95 @@
 import { StyleSheet, StatusBar, TextInput, Image, Text, View, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { Colors, Fonts, Images } from '../constants'
-import { Separator } from '../components'
+import { LoadingScreen, Separator } from '../components'
 import { Display } from '../utils'
+import { AuthrnticationService } from '../services'
+
+
+
 
 const SignupScreen = ({ navigation }) => {
-
     const [isPasswordShow, setIsPasswordShow] = useState(false)
+    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
+    const [isLoading, setisLoading] = useState(false)
+    const [userameErrorMessage, setuserameErrorMessage] = useState('')
+    const [emailErrorMessage, setemailErrorMessage] = useState('')
+    const [emailState, setemailState] = useState('default')
+    const [usernameState, setusernameState] = useState('default')
+
+
+    const inputStyle = (state) => {
+        switch (state) {
+            case 'valid':
+                return { ...styles.inputcontainer, borderWidth: 1, borderColor: Colors.SECONDARY_GREEN }
+            case 'invalid':
+                return { ...styles.inputcontainer, borderWidth: 1, borderColor: Colors.DEFAULT_RED }
+
+            default:
+                return styles.inputcontainer
+        }
+    }
+    const showMarker = (state) => {
+        switch (state) {
+            case 'valid':
+                return (<Image source={Images.TICKMARK} />)
+            case 'invalid':
+                return (<Image source={Images.XMARK} />)
+
+            default:
+                return null
+        }
+    }
+
+
+    const register = () => {
+        let user = {
+            username,
+            email,
+            password
+        }
+        console.log(user);
+        setisLoading(true)
+        AuthrnticationService.register(user).then(response => {
+            setisLoading(false)
+            console.log(response);
+            if (!response?.status) {
+                setErrorMessage(response?.message)
+                setTimeout(() => {
+                    setErrorMessage('');
+                }, 5000)
+            }
+        })
+        // navigation.navigate("RegisterPhone")
+    }
+
+    const checkUserExist = async = (type, value) => {
+        if (value?.length > 0) {
+            AuthrnticationService.checkUserExist(type, value)
+                .then(response => {
+                    if (response?.status) {
+                        type === 'email' && emailErrorMessage ? setemailErrorMessage('') : null
+                        type === 'username' && userameErrorMessage ? setuserameErrorMessage('') : null
+
+                        type === 'email' ? setemailState('valid') : null
+                        type === 'username' ? setusernameState('valid') : null
+
+                    } else {
+                        type === 'email' ? setemailErrorMessage(response.message) : null
+                        type === 'username' ? setuserameErrorMessage(response.message) : null
+
+
+                        type === 'email' ? setemailState('invalid') : null
+                        type === 'username' ? setusernameState('invalid') : null
+
+                    }
+                })
+        }
+    }
+
 
 
     return (
@@ -22,7 +105,7 @@ const SignupScreen = ({ navigation }) => {
             <Text style={styles.title}>Create Account</Text>
             <Text style={styles.content}>Enter your email, choose a username and password</Text>
 
-            <View style={styles.inputcontainer}>
+            <View style={inputStyle(usernameState)}>
                 <View style={styles.inputSubcontainer}>
                     {/* <Feather name='user' size={22}/> */}
                     <Image source={Images.USERICON} style={{ marginRight: 10 }} />
@@ -31,13 +114,16 @@ const SignupScreen = ({ navigation }) => {
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
+                        onChangeText={(text) => setUsername(text)}
+                        onEndEditing={({ nativeEvent: { text } }) => checkUserExist('username', text)}
                     />
+                    {showMarker(usernameState)}
                 </View>
             </View>
 
-            <Separator height={15} />
+            <Text style={styles.errMsg}>{userameErrorMessage}</Text>
 
-            <View style={styles.inputcontainer}>
+            <View style={inputStyle(emailState)}>
                 <View style={styles.inputSubcontainer}>
                     {/* <Feather name='user' size={22}/> */}
                     <Image source={Images.EMAIL} style={{ marginRight: 10 }} />
@@ -46,11 +132,17 @@ const SignupScreen = ({ navigation }) => {
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
+                        onChangeText={(text) => setEmail(text)}
+                        onEndEditing={({ nativeEvent: { text } }) => checkUserExist('email', text)}
+
                     />
+                    {showMarker(emailState)}
+
                 </View>
             </View>
+            <Text style={styles.errMsg}>{emailErrorMessage}</Text>
 
-            <Separator height={15} />
+
             <View style={styles.inputcontainer}>
                 <View style={styles.inputSubcontainer}>
                     <Image source={Images.LOCKICON} style={{ marginRight: 10 }} />
@@ -58,7 +150,9 @@ const SignupScreen = ({ navigation }) => {
                         secureTextEntry={isPasswordShow ? false : true}
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
-                        style={styles.inputText} />
+                        style={styles.inputText}
+                        onChangeText={(text) => setPassword(text)}
+                    />
                     {/* <Feather /> */}
                     <TouchableOpacity onPress={() => setIsPasswordShow(!isPasswordShow)}>
                         {isPasswordShow ? <Image source={Images.EYEOFF} style={{ height: 25, width: 25, marginRight: 15 }} />
@@ -66,8 +160,10 @@ const SignupScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <TouchableOpacity style={styles.siginbtn}>
-                <Text style={styles.siginbtnTest} onPress={() => navigation.navigate("RegisterPhone")}>Create Account</Text>
+            <Text style={styles.errMsg}>{errorMessage}</Text>
+            <TouchableOpacity style={styles.siginbtn} onPress={() => register()}>
+                {isLoading ? <LoadingScreen /> : <Text style={styles.siginbtnTest}>Create Account</Text>}
+
             </TouchableOpacity>
 
             <Text style={styles.orText}>OR</Text>
@@ -113,6 +209,7 @@ const styles = StyleSheet.create({
         width: Display.setHeight(80),
         marginStart: Display.setHeight(16),
     },
+
     title: {
         fontSize: 20,
         fontFamily: Fonts.POPPINS_MEDIUM,
@@ -158,6 +255,11 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     siginbtnTest: {
+        fontSize: 18,
+        lineHeight: 18 * 1.4,
+        color: Colors.DEFAULT_WHITE,
+        fontFamily: Fonts.POPPINS_MEDIUM
+    }, siginbtnText: {
         fontSize: 18,
         lineHeight: 18 * 1.4,
         color: Colors.DEFAULT_WHITE,
@@ -212,6 +314,13 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.POPPINS_MEDIUM,
         lineHeight: 13 * 1.4,
         color: Colors.DEFAULT_WHITE
-
+    },
+    errMsg: {
+        fontSize: 10,
+        lineHeight: 10 * 1.4,
+        color: Colors.DEFAULT_RED,
+        fontFamily: Fonts.POPPINS_MEDIUM,
+        marginHorizontal: 20,
+        marginTop: 5
     },
 })

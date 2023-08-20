@@ -6,5 +6,8 @@ apply from: file("../node_modules/@react-native-community/cli-platform-android/n
 include ':app'
 includeBuild('../node_modules/react-native-gradle-plugin')
 
+// include ':lottie-react-native'
+// project(':lottie-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/lottie-react-native/src/android')
+
 
 // apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

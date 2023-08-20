@@ -2,6 +2,7 @@ import WelcomeCard from "./WelcomeCard";
 import Separator from "./Separator";
 import ToggleButton from "./ToggleButton";
 import FlagItem from "./FlagItem";
+import LoadingScreen from "./LoadingScreen";
 
 
-export { WelcomeCard, Separator, FlagItem, ToggleButton }
+export { WelcomeCard,LoadingScreen, Separator, FlagItem, ToggleButton }

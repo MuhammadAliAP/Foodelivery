@@ -1,3 +1,5 @@
 import StaticImageService from "./StaticImageService";
+import AuthrnticationService from "./AuthrnticationService";
 
-export { StaticImageService }
+
+export { StaticImageService, AuthrnticationService }

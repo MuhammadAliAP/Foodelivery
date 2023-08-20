@@ -153,6 +153,8 @@ dependencies {
     implementation("com.facebook.react:react-android")
 
 
+// implementation project(':lottie-react-native') // njaan
+
 implementation project(':react-native-vector-icons') /// njaan add aakiyath
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
 

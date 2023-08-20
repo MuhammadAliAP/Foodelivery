@@ -1,15 +1,40 @@
 import { Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import { Separator, ToggleButton } from '../components'
+import { Separator, ToggleButton, LoadingScreen } from '../components'
 import { Colors, Fonts, Images } from '../constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import { Display } from '../utils';
+import { AuthrnticationService } from '../services';
 
 
 const SigninScreen = ({ navigation }) => {
 
   const [isPasswordShow, setIsPasswordShow] = useState(false)
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoading, setisLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
+
+
+  const signIn = async () => {
+    setisLoading(true)
+    let user = {
+      username, password
+    }
+    AuthrnticationService.login(user).then(response => {
+      setisLoading(false)
+      console.log(response);
+      if (!response?.status) {
+        setErrorMessage(response?.message)
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 5000)
+      }
+
+    })
+  }
+
 
   return (
     <View style={styles.container}>
@@ -36,6 +61,7 @@ const SigninScreen = ({ navigation }) => {
             placeholderTextColor={Colors.DEFAULT_GREY}
             selectionColor={Colors.DEFAULT_GREY}
             style={styles.inputText}
+            onChangeText={(text) => setUsername(text)}
           />
         </View>
       </View>
@@ -47,7 +73,11 @@ const SigninScreen = ({ navigation }) => {
             secureTextEntry={isPasswordShow ? false : true}
             placeholderTextColor={Colors.DEFAULT_GREY}
             selectionColor={Colors.DEFAULT_GREY}
-            style={styles.inputText} />
+            style={styles.inputText}
+            onChangeText={(text) => setPassword(text)}
+
+          />
+
           {/* <Feather /> */}
           <TouchableOpacity onPress={() => setIsPasswordShow(!isPasswordShow)}>
             {isPasswordShow ? <Image source={Images.EYEOFF} style={{ height: 25, width: 25, marginRight: 15 }} />
@@ -55,7 +85,7 @@ const SigninScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <Text></Text>
+      <Text style={styles.errMsg}>{errorMessage}</Text>
 
       <View style={styles.forgotPasswordContainer}>
         <View style={styles.toggleContainer}>
@@ -65,8 +95,11 @@ const SigninScreen = ({ navigation }) => {
         <Text style={styles.forgotPasswordText} onPress={() => navigation.navigate("ForgotPassword")}>Forgot password</Text>
       </View>
 
-      <TouchableOpacity style={styles.siginbtn}>
-        <Text style={styles.siginbtnTest}>Sign In</Text>
+      <TouchableOpacity style={styles.siginbtn} onPress={() => signIn()} activeOpacity={0.8
+      }>
+        {isLoading ? <LoadingScreen /> : <Text style={styles.siginbtnTest}>Sign In</Text>}
+
+
       </TouchableOpacity>
 
       <View style={styles.signupContainer}>
@@ -258,7 +291,15 @@ const styles = StyleSheet.create({
   toggleContainer: {
     flexDirection: 'row',
     alignItems: 'center'
-  }
+  }, errMsg: {
+    fontSize: 10,
+    lineHeight: 10 * 1.4,
+    color: Colors.DEFAULT_RED,
+    fontFamily: Fonts.POPPINS_MEDIUM,
+    marginHorizontal: 20,
+    marginTop: 4,
+    marginBottom: 10
+  },
 
 
 
