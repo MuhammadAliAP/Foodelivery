@@ -5,7 +5,8 @@ import SignupScreen from "./SignupScreen";
 import ForgotPasswordScreen from "./ForgotPasswordScreen";
 import RegisterPhoneScreen from "./RegisterPhoneScreen";
 import VerificationScreen from "./VerificationScreen";
+import HomeScreen from "./HomeScreen";
 
 
 
-export { SplashScreen, VerificationScreen, RegisterPhoneScreen, ForgotPasswordScreen, SignupScreen, SigninScreen, WelcomeScreen }
+export { SplashScreen,HomeScreen, VerificationScreen, RegisterPhoneScreen, ForgotPasswordScreen, SignupScreen, SigninScreen, WelcomeScreen }

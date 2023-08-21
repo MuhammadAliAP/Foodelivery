@@ -6,9 +6,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import { Display } from '../utils';
 import { AuthrnticationService } from '../services';
+import { connect } from 'react-redux'
+import { GeneralAction } from '../actions';
 
-
-const SigninScreen = ({ navigation }) => {
+const SigninScreen = ({ navigation,setToken }) => {
 
   const [isPasswordShow, setIsPasswordShow] = useState(false)
   const [username, setUsername] = useState("")
@@ -24,6 +25,7 @@ const SigninScreen = ({ navigation }) => {
     }
     AuthrnticationService.login(user).then(response => {
       setisLoading(false)
+      setToken(response?.data)
       console.log(response);
       if (!response?.status) {
         setErrorMessage(response?.message)
@@ -129,7 +131,14 @@ const SigninScreen = ({ navigation }) => {
   )
 }
 
-export default SigninScreen
+
+const mapDispatchToprops = dispatch => {
+  return {
+    setToken: (token) => dispatch(GeneralAction.setToken(token))
+  }
+
+}
+export default connect(null, mapDispatchToprops)(SigninScreen)
 
 const styles = StyleSheet.create({
   container: {
@@ -305,3 +314,4 @@ const styles = StyleSheet.create({
 
 
 })
+
