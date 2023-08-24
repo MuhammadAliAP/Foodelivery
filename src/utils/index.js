@@ -1,2 +1,4 @@
 import Display from "./Display";
-export {Display}
+import { authHeader } from "./Generator";
+
+export { Display, authHeader }

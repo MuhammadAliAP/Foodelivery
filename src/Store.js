@@ -1,7 +1,11 @@
+import thunk from "redux-thunk";
 import reducers from "./reducers";
 
-const { createStore } = require("redux");
+// const { createStore } = require("redux");
+import { legacy_createStore as createStore, applyMiddleware } from 'redux'
 
-const store = createStore(reducers)
+const Store = createStore(reducers, applyMiddleware(thunk))
 
-export default store
+const getToken = () => Store?.getState()?.generalState?.token
+
+export  { Store, getToken }

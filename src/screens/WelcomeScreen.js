@@ -3,6 +3,9 @@ import React, { useRef, useState } from 'react'
 import { Colors, Fonts, General, Images } from '../constants'
 import { Separator, WelcomeCard } from '../components'
 import { Display } from '../utils'
+import { StorageService } from '../services'
+import { useDispatch } from 'react-redux'
+import { GeneralAction } from '../actions'
 
 
 const Pagination = ({ index }) => {
@@ -40,6 +43,14 @@ const WelcomeScreen = ({ navigation }) => {
     }
 
     // upto here
+
+    const dispatch = useDispatch()
+    const navigate = () => {
+        StorageService.setFirstTimeUse().then(() => {
+            dispatch(GeneralAction.setIsFirstTimeUse())
+           
+        })
+    }
     return (
         <View style={styles.container}>
             <StatusBar translucent barStyle="dark-content" backgroundColor={Colors.DEFAULT_WHITE} />
@@ -69,7 +80,7 @@ const WelcomeScreen = ({ navigation }) => {
             {welcomeListIndex === 2 ? (
 
                 <View style={styles.btnContainer}>
-                    <TouchableOpacity activeOpacity={.8} style={styles.gettingstdbtn} onPress={() => navigation.navigate('Singin')}>
+                    <TouchableOpacity activeOpacity={.8} style={styles.gettingstdbtn} onPress={() => navigate()}>
                         <Text style={styles.gettingstdbtnTxt}>GET STARTED</Text>
                     </TouchableOpacity>
                 </View>

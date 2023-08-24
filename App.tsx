@@ -1,10 +1,10 @@
 import React from 'react';
 import Navigators from './src/navigators';
-import store from './src/Store';
-import {Provider}from  'react-redux'
+import { Store } from "./src/Store"
+import { Provider } from 'react-redux'
 
 export default () => (
-    <Provider store={store}>
+    <Provider store={Store}>
         <Navigators />
     </Provider>
 

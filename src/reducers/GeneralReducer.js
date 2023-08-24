@@ -3,8 +3,11 @@ import { GeneralAction } from "../actions"
 
 const initialState = {
     isAppLoading: true,
-    token: ''
+    token: '',
+    isFirstTimeUse: true,
+    userData:{}
 }
+
 
 const GeneralReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -13,10 +16,16 @@ const GeneralReducer = (state = initialState, action) => {
 
         case GeneralAction.types.SET_TOKEN:
             return { ...state, token: action.payload }
+
+        case GeneralAction.types.SET_FIRST_TIME_USE:
+            return { ...state, isFirstTimeUse: action.payload }
+
+            case GeneralAction.types.SET_USER_DATA:
+                return { ...state, userData: action.payload }
         default:
             return state
     }
-  
+
 }
 
 export default GeneralReducer
