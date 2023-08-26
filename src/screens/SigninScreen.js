@@ -7,7 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { Display } from '../utils';
 import { AuthrnticationService, StorageService } from '../services';
 import { GeneralAction } from '../actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SigninScreen = ({ navigation }) => {
 
@@ -42,6 +42,7 @@ const SigninScreen = ({ navigation }) => {
     })
   }
 
+  const { isFirstTimeUse } = useSelector(state => state.generalState)
 
   return (
     <View style={styles.container}>
@@ -50,9 +51,11 @@ const SigninScreen = ({ navigation }) => {
       <Separator height={StatusBar.currentHeight} />
       <View style={styles.headerContainer}>
         {/* <Ionicons name="chevron-back-outline" size={30} /> */}
+
         <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={.8}>
           <Image source={Images.BACKICON} resizeMode='contain' style={{ width: 20 }} />
         </TouchableOpacity>
+
         <Text style={styles.headerTitle}>Sign In</Text>
       </View>
 

@@ -8,7 +8,7 @@ const getFirstTimeUse = () => {
     return AsyncStorage.getItem('isFirstTimeUse')
 }
 const setToken = token => {
-    return AsyncSorage.setItem('token', token);
+    return AsyncStorage.setItem('token', token);
 }
 const getToken = () => {
     return AsyncStorage.getItem('token')
