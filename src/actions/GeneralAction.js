@@ -57,7 +57,7 @@ const appStart = () => {
                             payload: false
                         })
                         // if token is not there(expired) update/refresh
-                    } else if (userResponse?.error?.message === 'TokenExpiredError') {
+                    } else if (userResponse?.message === 'TokenExpiredError') {
                         AuthrnticationService.refreashToken().then(tokenReponse => {
                             if (tokenReponse?.status) {
                                 dispatch({

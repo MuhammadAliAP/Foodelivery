@@ -12,6 +12,11 @@ export default {
     DESSERT: require('../assets/images/dessert.png'),
     NOODLES: require('../assets/images/noodles.png'),
     DRINKS: require('../assets/images/drinks.png'),
+    DELIVERY_TIME: require('../assets/images/delivery_time.png'),
+    DELIVERY_CHARGE: require('../assets/images/delivery_charge.png'),
+    MARKER: require('../assets/images/marker.png'),
+    EMPTY_CART: require('../assets/images/empty_cart.png'),
+    AVATAR: require('../assets/images/user_avatar.png'),
 
 
     BACKICON: require("../assets/images/backicon.png"),
@@ -28,7 +33,10 @@ export default {
     WHITEARROEDOWN: require("../assets/images/white-arrow-down.png"),
     SEARCH: require("../assets/images/search.png"),
     SLIDER: require("../assets/images/slider.png"),
+    STAR: require("../assets/images/star.png"),
+    YELLOWLOCATION: require("../assets/images/yellowlocation.png"),
+    TIME: require("../assets/images/time.png"),
 
-
+    
 
 }

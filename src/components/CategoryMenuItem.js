@@ -15,7 +15,7 @@ const CategoryMenuItem = ({ name, logo, activeCategory, setActiveCategory }) => 
 export default CategoryMenuItem
 
 const styles = StyleSheet.create({
-    category: (marginTop = 0) => ({
+    category: (marginTop = 0) => ({ 
         alignItems: 'center',
         marginTop,
     }),
